@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trividaw - login</title>
+    <script src="acciones.js" defer></script> <!--carga diferida del script--> 
+    <link rel="stylesheet" href="login.css">
+    <style>
+        /* Estilo para el contenedor de la imagen */
+        
+        #midContainerImage {
+            position: relative;  /* Necesario para posicionar elementos de forma absoluta dentro */
+            width: 80%;
+            margin: 0 auto;
+            padding: 100px 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        #formContainerImage {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Definir el contenedor de los campos de formulario con grid */
+        #formFieldsContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;  /* Espaciado entre los campos */
+            position: absolute;
+            top: 25%; /* Esto ajusta el contenedor hacia la parte superior */
+            left: 50%;
+            transform: translateX(-50%); /* Centrado horizontal */
+            width: 150px; /* Ancho fijo */
+            text-align: center;
+            gap: 20px;
+        }
+        #nickname {
+            order: 1; /* Define el orden del campo */
+            margin-top: 60px;
+            height:9;
+        }
+    
+
+        #email {
+            order: 2;
+            margin-top: -40px;
+        }
+
+        #botonIni {
+            position: relative; 
+            z-index: 10; /* Asegura que esté sobre otros elementos */
+            transform: translateY(-150%);
+            width: 300px;
+            margin-top: -900px;
+            cursor: pointer; /* Cambia el cursor a una manita al pasar por el botón */
+            transition: transform 0.1s ease-in-out;
+        }
+
+        #botonIni:active {
+            transform: translateY(-150%) scale(0.95); /* efecto de pulsación */
+        }
+       
+        /* Estilo para los campos de formulario */
+        .campo-formulario {
+            background-color: rgba(255, 255, 255, 0.2);  
+            padding: 15px;
+            border-radius: 30px;  /* Esquinas completamente redondeadas */
+            box-sizing: border-box;
+        }
+
+        .campo-formulario input,
+        .campo-formulario select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: rgba(255, 255, 255, 0.7);
+            color: black;
+            border-radius: 30px;
+        }
+
+        .campo-formulario label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        /* Avatar y sus flechas */
+        .avatar-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.1px;
+            margin: 20px 0;
+            margin-top: -65%;
+        }
+        /* Flechas */
+        .arrow {
+            cursor: pointer;
+            width: 70px;
+            height: 70px;
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }   
+
+    </style>
+</head>
+<body>
+    
+
+    <div id="midContainerImage">
+        <img src="img/formContainerImage.png" id="formContainerImage" alt="imagen">
+
+    <div class="avatar-container">
+            <img src="img/izq.png" id="arrow-left" class="arrow" alt="Flecha izquierda">
+            <img src="img/ava1.png" id="avatar" class="avatar" alt="Avatar actual">
+            <img src="img/der.png" id="arrow-right" class="arrow" alt="Flecha derecha">
+    </div>
+
+        <!-- Contenedor para los campos del formulario -->
+        <div id="formFieldsContainer">
+
+            <!-- Campo de Nombre o Apodo -->
+            <div class="campo-formulario" id="nickname">
+                <label for="nickname"></label>
+                <input type="text" id="nickname" name="nickname" placeholder="nombre o apodo">
+            </div>
+
+            <!-- Campo de Correo Electrónico -->
+            <div class="campo-formulario" id="email">
+                <label for="email"></label>
+                <input type="email" id="email" name="email" placeholder="correo electrónico">
+            </div>
+            
+
+        </div> <!-- Fin del contenedor de los campos del formulario -->
+        
+    </div> <!-- Fin del contenedor de la imagen -->
+    
+    <div id="midContainerBanner" class="floating-image">    
+        <img src="img/welcomeBanner.png" id="welcomeBanner" alt="Bienvenidos">
+    </div>
+    
+    <!--Botón de iniciar-->
+    <div id="divBotonIni" class="saveStartButton">
+        <img src="img/iniciar.png" id="botonIni" alt="iniciar" onclick="goToPage()">
+    </div>
+
+    <!-- 
+    <div id="botonVueltaInicio" class="pulsadoresInicio" onclick="window.location.href='login.html';">
+        <img src="img/botonVueltaInicio.png" alt="Jugar"> 
+    </div>  
+    -->
+    <audio id="music" style="display: none;" loop>
+        <source src="
+    music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>    
+    
+    <img src="img/clock.png" alt="Icono de reloj" class="icon icon-clock" id="clock-icon">
+    <img src="img/volume.png" alt="Icono de sonido" class="icon icon-sound" id="sound-icon">
+    <img src="img/trophy.png" alt="Icono de trofeo" class="icon icon-trophy">
+    <img src="img/question-mark.png" alt="Icono de pregunta" class="icon icon-question">
+    <img src="img/settings.png" alt="Icono de configuración" class="icon icon-config">
+
+    <script>
+
+        // array de avatares
+        const avatars = ["img/ava1.png", "img/ava2.png", "img/ava3.png"];
+        let currentAvatarIndex = 0; // gatito by default jeje 
+    
+            // Elementos del DOM
+        const avatarElement = document.getElementById("avatar");
+        const leftArrow = document.getElementById("arrow-left");
+        const rightArrow = document.getElementById("arrow-right");
+    
+            // Función para cambiar el avatar
+        function updateAvatar(index) {
+            avatarElement.src = avatars[index];
+        }
+        
+            // Eventos para cambiar de avatar
+        leftArrow.addEventListener("click", () => {
+            currentAvatarIndex = (currentAvatarIndex - 1 + avatars.length) % avatars.length;
+                updateAvatar(currentAvatarIndex);
+            });
+    
+        rightArrow.addEventListener("click", () => {
+            currentAvatarIndex = (currentAvatarIndex + 1) % avatars.length;
+            updateAvatar(currentAvatarIndex);
+            });
+            
+    </script>
+        <!--Ánimo. Let's gooo -->
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trividaw</title>
+    <script>
+        window.addEventListener("load", iniciar);
+
+        function iniciar() {
+            let icono = document.getElementById("sound-icon");
+
+            icono.addEventListener("click", function () {
+                if (icono.src.includes("volume.png")) {
+                    icono.src = "img/mute.png";
+                } else {
+                    icono.src = "img/volume.png";
+                }
+            });
+
+            let reloj = document.getElementById("clock-icon");
+            let modelo = document.getElementById("modelofecha");
+            let modeloTexto = document.getElementById("modelo-texto");
+
+            reloj.addEventListener("click", function () {
+                let fecha = new Date();
+                let formatoFecha = fecha.toLocaleDateString();
+                let formatoHora = fecha.toLocaleTimeString();
+                modeloTexto.textContent = `Fecha: ${formatoFecha} - Hora: ${formatoHora}`;
+                modelo.style.display = "flex";
+            });
+
+            // Funcionalidad para botón About Us (boton2)
+            let boton2 = document.querySelector(".boton2");
+            let modeloAbout = document.getElementById("modelo-about");
+            let aboutTexto = document.getElementById("about-text");
+
+            boton2.addEventListener("click", function () {
+                aboutTexto.textContent = `¡Hola! Somos Fátima y Sergio, dos estudiantes apasionados por el desarrollo de aplicaciones web, actualmente cursando nuestro segundo y último año de este fascinante camino. Nuestro interés por la tecnología y los videojuegos nos llevó a crear este divertido proyecto: un trivial de preguntas que combina aprendizaje y entretenimiento.
+                Este juego fue desarrollado utilizando JavaScript, HTML y CSS, aprovechando las herramientas que hemos aprendido durante el curso. Queríamos diseñar algo que no solo pusiera a prueba los conocimientos de los jugadores, sino que también reflejara nuestra creatividad y habilidades técnicas.
+                Creemos que los juegos tienen el poder de conectar a las personas y de convertir el aprendizaje en una experiencia emocionante. Este trivial es nuestro pequeño aporte a ese mundillo, y esperamos que disfrutes tanto jugándolo como nosotros disfrutamos creándolo.
+                ¡Gracias por acompañarnos en este viaje!`;
+                modeloAbout.style.display = "flex";
+            });
+
+            // Cerrar modelos
+            window.addEventListener("click", function (event) {
+                if (event.target === modelo) {
+                    modelo.style.display = "none";
+                }
+                if (event.target === modeloAbout) {
+                    modeloAbout.style.display = "none";
+                }
+            });
+        }
+    </script>
+
+    <style>
+        body {
+            display: grid;
+            background-image: url("img/fondo.jpg");
+            background-size: cover;
+            height: 100vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            place-items: center;
+        }
+
+        #container2 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            width: 60%;
+            height: auto;
+        }
+
+        #container2 img {
+            display: flex;
+            flex-direction: column;
+            width: 500px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .texto {
+            position: absolute;
+            top: 140px;
+        }
+
+        .boton {
+            position: absolute;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .boton1 {
+            top: 37%;
+            left: 40%;
+            width: 355px;
+            height: 60px;
+            border-radius: 28%;
+        }
+
+        .boton2 {
+            top: 56%;
+            left: 40%;
+            width: 355px;
+            height: 60px;
+        }
+
+        .boton:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .icon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+        }
+
+        .icon-sound {
+            top: 20px;
+            left: 20px;
+        }
+
+        .icon-clock {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .icon-trophy {
+            top: 20px;
+            right: 20px;
+        }
+
+        .icon-question {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .icon-config {
+            top: 20px;
+            right: 80px;
+        }
+
+        .modelo {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modelo-contenido {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: aparecer 0.3s ease-out;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-size: 16px;
+            word-wrap: break-word;
+        }
+
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container2">
+        <img src="img/trividaw.png" alt="trividaw" class="texto">
+        <img src="img/form.png" alt="botones">
+        <button class="boton boton1" onclick="location.href='login.html'"></button>
+        <button class="boton boton2"></button>
+    </div>
+
+    <img src="img/clock.png" alt="Icono de reloj" class="icon icon-clock" id="clock-icon">
+    <img src="img/volume.png" alt="Icono de sonido" class="icon icon-sound" id="sound-icon">
+    <img src="img/trophy.png" alt="Icono de trofeo" class="icon icon-trophy">
+    <img src="img/question-mark.png" alt="Icono de pregunta" class="icon icon-question">
+    <img src="img/settings.png" alt="Icono de configuración" class="icon icon-config">
+
+    <!-- Modelo para About Us -->
+    <div id="modelo-about" class="modelo">
+        <div class="modelo-contenido">
+            <p id="about-text"></p>
+        </div>
+    </div>
+
+    <!-- Modelo para fecha -->
+    <div id="modelofecha" class="modelo">
+        <div class="modelo-contenido">
+            <p id="modelo-texto"></p>
+        </div>
+    </div>
+</body>
+
+</html>
